@@ -1,0 +1,78 @@
+<div class="container mx-auto px-4 py-10 max-w-2xl">
+  <h1 class="text-2xl font-bold mb-8">Modifier mon profil</h1>
+
+  @if (loading) { <app-loader /> }
+  @else {
+    @if (error) {
+      <div class="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">{{ error }}</div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="bg-white rounded-2xl shadow-sm p-8 space-y-5">
+      <div class="grid md:grid-cols-2 gap-5">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Prénom</label>
+          <input type="text" formControlName="firstName"
+                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Nom</label>
+          <input type="text" formControlName="lastName"
+                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500" />
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">École / Université</label>
+        <input type="text" formControlName="school"
+               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Domaines (séparés par des virgules)</label>
+        <input type="text" formControlName="domains" placeholder="Web Dev, Data Science, Design"
+               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Intérêts (séparés par des virgules)</label>
+        <input type="text" formControlName="interests" placeholder="IA, Startup, Open Source"
+               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Bio (max 500 caractères)</label>
+        <textarea formControlName="bio" rows="3"
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 resize-none"></textarea>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">LinkedIn</label>
+        <input type="url" formControlName="linkedinUrl" placeholder="https://linkedin.com/in/..."
+               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">CV (PDF)</label>
+        <input type="file" accept=".pdf" (change)="onCvChange($event)"
+               class="w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-100" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Photo de profil</label>
+        <input type="file" accept="image/*" (change)="onAvatarChange($event)"
+               class="w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-100" />
+      </div>
+
+      <div class="flex gap-3 pt-2">
+        <button type="submit" [disabled]="saving"
+                class="px-6 py-3 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 disabled:opacity-60 transition-colors">
+          {{ saving ? 'Sauvegarde...' : 'Sauvegarder' }}
+        </button>
+        <a routerLink="/student/profile"
+           class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
+          Annuler
+        </a>
+      </div>
+    </form>
+  }
+</div>

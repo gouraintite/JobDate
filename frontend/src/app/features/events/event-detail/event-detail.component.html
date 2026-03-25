@@ -1,0 +1,64 @@
+<div class="container mx-auto px-4 py-10 max-w-2xl">
+  @if (loading) { <app-loader /> }
+  @else if (error) { <p class="text-red-600 text-center">{{ error }}</p> }
+  @else if (event) {
+    <a routerLink="/events" class="text-primary-600 text-sm font-medium hover:underline mb-6 inline-block">
+      ← Retour aux événements
+    </a>
+
+    <div class="bg-white rounded-2xl shadow-sm p-8">
+      <div class="flex items-center gap-4 mb-6">
+        @if (event.companyId.logoUrl) {
+          <img [src]="event.companyId.logoUrl" class="w-14 h-14 rounded-xl object-contain" alt="Logo" />
+        } @else {
+          <div class="w-14 h-14 rounded-xl bg-gray-100 flex items-center justify-center text-2xl">🏢</div>
+        }
+        <div>
+          <h2 class="font-bold text-lg">{{ event.companyId.name }}</h2>
+          @if (event.companyId.linkedinUrl) {
+            <a [href]="event.companyId.linkedinUrl" target="_blank"
+               class="text-primary-600 text-sm hover:underline">Voir sur LinkedIn</a>
+          }
+        </div>
+      </div>
+
+      <h1 class="text-2xl font-bold mb-4">{{ event.title }}</h1>
+
+      <div class="flex flex-wrap gap-4 text-sm text-gray-600 mb-6">
+        <span class="flex items-center gap-1">📅 {{ event.date | date:'dd MMMM yyyy, HH:mm' }}</span>
+        <span class="flex items-center gap-1">📍 {{ event.location }}</span>
+      </div>
+
+      <p class="text-gray-700 mb-6 leading-relaxed">{{ event.description }}</p>
+
+      @if (event.contractTypes.length) {
+        <div class="mb-4">
+          <h3 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Contrats proposés</h3>
+          <div class="flex flex-wrap gap-2">
+            @for (ct of event.contractTypes; track ct) {
+              <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">{{ ct }}</span>
+            }
+          </div>
+        </div>
+      }
+
+      @if (event.targetDomains.length) {
+        <div class="mb-6">
+          <h3 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Domaines recherchés</h3>
+          <div class="flex flex-wrap gap-2">
+            @for (d of event.targetDomains; track d) {
+              <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">{{ d }}</span>
+            }
+          </div>
+        </div>
+      }
+
+      @if (event.linkedinUrl) {
+        <a [href]="event.linkedinUrl" target="_blank"
+           class="inline-block px-6 py-3 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 transition-colors">
+          Voir l'offre complète sur LinkedIn
+        </a>
+      }
+    </div>
+  }
+</div>

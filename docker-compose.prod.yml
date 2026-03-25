@@ -1,0 +1,45 @@
+services:
+  mongo:
+    image: mongo:7
+    restart: always
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - jobdate_net
+    # No ports exposed — internal network only
+
+  backend:
+    build:
+      context: ./backend
+      target: prod
+    restart: always
+    env_file: .env
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - uploads_data:/app/src/uploads
+    depends_on:
+      - mongo
+    networks:
+      - jobdate_net
+
+  frontend:
+    build:
+      context: ./frontend
+      target: prod
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - backend
+    networks:
+      - jobdate_net
+
+volumes:
+  mongo_data:
+  uploads_data:
+
+networks:
+  jobdate_net:
+    driver: bridge

@@ -1,0 +1,29 @@
+<div class="container mx-auto px-4 py-10 max-w-lg text-center">
+  <h1 class="text-2xl font-bold mb-2">Mon QR Code</h1>
+  <p class="text-gray-500 mb-8">
+    Laissez les recruteurs scanner ce code pour accéder à votre profil complet et télécharger votre CV.
+  </p>
+
+  @if (loading) { <app-loader /> }
+  @else if (error) { <p class="text-red-600">{{ error }}</p> }
+  @else if (qrUrl) {
+    <div class="bg-white rounded-2xl shadow-sm p-10 inline-block">
+      <img [src]="qrUrl" alt="QR Code profil" class="w-64 h-64 mx-auto" />
+    </div>
+
+    <div class="flex flex-col sm:flex-row gap-3 justify-center mt-8">
+      <button (click)="download()"
+              class="px-6 py-3 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition-colors">
+        Télécharger le QR Code
+      </button>
+      <a routerLink="/student/profile"
+         class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
+        Retour au profil
+      </a>
+    </div>
+
+    <p class="text-xs text-gray-400 mt-6">
+      Ce QR code est unique et public. Toute personne qui le scanne peut voir votre profil.
+    </p>
+  }
+</div>

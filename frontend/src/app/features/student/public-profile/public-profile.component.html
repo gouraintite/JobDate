@@ -1,0 +1,76 @@
+<div class="min-h-screen bg-gray-50 py-10 px-4">
+  <div class="max-w-xl mx-auto">
+    @if (loading) { <app-loader /> }
+    @else if (error) {
+      <div class="text-center py-20">
+        <p class="text-6xl mb-4">🔍</p>
+        <h1 class="text-2xl font-bold mb-2">Profil introuvable</h1>
+        <p class="text-gray-500">Ce QR code ne correspond à aucun profil actif.</p>
+      </div>
+    }
+    @else if (student) {
+      <!-- Header branding -->
+      <div class="text-center mb-6">
+        <span class="text-primary-600 font-bold text-lg">JobDate</span>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+        <!-- Avatar & name -->
+        <div class="bg-gradient-to-br from-primary-600 to-primary-700 px-8 py-10 text-white text-center">
+          @if (student.avatarUrl) {
+            <img [src]="student.avatarUrl" class="w-24 h-24 rounded-full object-cover mx-auto mb-4 border-4 border-white" alt="Avatar" />
+          } @else {
+            <div class="w-24 h-24 rounded-full bg-white/20 flex items-center justify-center text-4xl mx-auto mb-4">
+              👤
+            </div>
+          }
+          <h1 class="text-2xl font-bold">{{ student.firstName }} {{ student.lastName }}</h1>
+          @if (student.school) { <p class="text-blue-100 mt-1">{{ student.school }}</p> }
+        </div>
+
+        <div class="p-8 space-y-6">
+          @if (student.bio) {
+            <p class="text-gray-700">{{ student.bio }}</p>
+          }
+
+          @if (student.domains.length) {
+            <div>
+              <h3 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Domaines</h3>
+              <div class="flex flex-wrap gap-2">
+                @for (d of student.domains; track d) {
+                  <span class="px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-sm font-medium">{{ d }}</span>
+                }
+              </div>
+            </div>
+          }
+
+          @if (student.interests.length) {
+            <div>
+              <h3 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Intérêts</h3>
+              <div class="flex flex-wrap gap-2">
+                @for (i of student.interests; track i) {
+                  <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">{{ i }}</span>
+                }
+              </div>
+            </div>
+          }
+
+          <div class="flex flex-col gap-3 pt-2">
+            @if (student.cvUrl) {
+              <a [href]="student.cvUrl" target="_blank"
+                 class="block text-center py-3 px-6 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 transition-colors">
+                Télécharger le CV
+              </a>
+            }
+            @if (student.linkedinUrl) {
+              <a [href]="student.linkedinUrl" target="_blank"
+                 class="block text-center py-3 px-6 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors">
+                Voir LinkedIn
+              </a>
+            }
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>

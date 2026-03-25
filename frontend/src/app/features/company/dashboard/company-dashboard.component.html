@@ -1,0 +1,51 @@
+<div class="container mx-auto px-4 py-10">
+  @if (loading) { <app-loader /> }
+  @else if (error) { <p class="text-red-600 text-center">{{ error }}</p> }
+  @else {
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <h1 class="text-2xl font-bold">{{ company?.name }}</h1>
+        <p class="text-gray-500">Dashboard entreprise</p>
+      </div>
+      <a routerLink="/company/events/new"
+         class="px-5 py-2.5 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition-colors">
+        + Créer un événement
+      </a>
+    </div>
+
+    <div class="grid gap-4">
+      @if (!events.length) {
+        <div class="bg-white rounded-2xl p-12 text-center text-gray-400">
+          <p class="text-4xl mb-3">📅</p>
+          <p>Aucun événement pour le moment.</p>
+          <a routerLink="/company/events/new" class="text-primary-600 font-medium hover:underline mt-2 inline-block">
+            Créer votre premier job dating
+          </a>
+        </div>
+      }
+      @for (event of events; track event._id) {
+        <div class="bg-white rounded-xl shadow-sm p-6 flex items-start justify-between gap-4">
+          <div>
+            <h3 class="font-semibold text-lg">{{ event.title }}</h3>
+            <p class="text-gray-500 text-sm mt-1">{{ event.date | date:'dd/MM/yyyy' }} — {{ event.location }}</p>
+            <div class="flex flex-wrap gap-2 mt-3">
+              @for (ct of event.contractTypes; track ct) {
+                <span class="px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded-full">{{ ct }}</span>
+              }
+            </div>
+          </div>
+          <div class="flex gap-2 shrink-0">
+            <a [routerLink]="['/company/events', event._id, 'edit']"
+               class="px-3 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+              Modifier
+            </a>
+            <button (click)="deleteEvent(event._id)"
+                    class="px-3 py-2 text-sm border border-red-200 text-red-600 rounded-lg hover:bg-red-50 transition-colors">
+              Supprimer
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

@@ -1,0 +1,44 @@
+<nav class="bg-white shadow-sm border-b border-gray-200">
+  <div class="container mx-auto px-4 h-16 flex items-center justify-between">
+    <a routerLink="/" class="text-xl font-bold text-primary-600">JobDate</a>
+
+    <div class="flex items-center gap-4">
+      <a routerLink="/events" routerLinkActive="text-primary-600 font-semibold"
+         class="text-gray-600 hover:text-primary-600 transition-colors">
+        Événements
+      </a>
+
+      @if (auth.isLoggedIn()) {
+        @if (auth.userRole() === 'student') {
+          <a routerLink="/student/profile" class="text-gray-600 hover:text-primary-600 transition-colors">
+            Mon profil
+          </a>
+          <a routerLink="/student/qr" class="text-gray-600 hover:text-primary-600 transition-colors">
+            Mon QR Code
+          </a>
+        }
+        @if (auth.userRole() === 'company') {
+          <a routerLink="/company/dashboard" class="text-gray-600 hover:text-primary-600 transition-colors">
+            Dashboard
+          </a>
+          <a routerLink="/scan" class="text-gray-600 hover:text-primary-600 transition-colors">
+            Scanner
+          </a>
+        }
+        <button (click)="auth.logout()"
+                class="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors">
+          Déconnexion
+        </button>
+      } @else {
+        <a routerLink="/login"
+           class="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors">
+          Connexion
+        </a>
+        <a routerLink="/register"
+           class="px-4 py-2 rounded-lg bg-primary-600 text-white hover:bg-primary-700 transition-colors">
+          S'inscrire
+        </a>
+      }
+    </div>
+  </div>
+</nav>
