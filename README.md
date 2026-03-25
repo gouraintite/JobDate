@@ -1,4 +1,5 @@
 # JobDate
+<<<<<<< HEAD
 
 Job dating web app for students seeking apprenticeships, internships, and first CDI.
 
@@ -73,3 +74,6 @@ Student registers → UUID token generated
                 → Browser opens /profile/:token (no login)
                     → Full profile + CV download shown instantly
 ```
+=======
+JobDating website dedicated to students mainly, built using Angular, Express (Node js) and Docker.
+>>>>>>> 23f21e82feb109de200d2db0685c4a2af2f07eb7
